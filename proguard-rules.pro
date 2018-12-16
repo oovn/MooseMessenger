@@ -10,8 +10,6 @@
 
 -keep class com.google.android.gms.**
 
--keep class org.openintents.openpgp.*
-
 -dontwarn org.bouncycastle.mail.**
 -dontwarn org.bouncycastle.x509.util.LDAPStoreHelper
 -dontwarn org.bouncycastle.jce.provider.X509LDAPCertStoreSpi

@@ -23,14 +23,14 @@
 	<color name="orange500">#ffff9800</color>
 	<color name="blue_a100">#ff82B1FF</color>
 	<color name="blue_a200">#ff448AFF</color>
-	<color name="green500">#ff3F51B5</color>
-	<color name="green600">#ff3949ab</color>
-	<color name="green700">#ff303f9f</color>
-	<color name="green800">#ff283593</color>
-	<color name="green900">#ff1a237e</color>
+	<color name="green500">#ff353b48</color>
+	<color name="green600">#ff353b48</color>
+	<color name="green700">#ff353b48</color>
+	<color name="green800">#ff353b48</color>
+	<color name="green900">#ff353b48</color>
 
-	<color name="green700_desaturated">#ff304ffe</color> <!-- desaturated by 15 -->
-	<color name="green900_desaturated">#ff131459</color> <!-- desaturated by 15 -->
+	<color name="green700_desaturated">#ff353b48</color> <!-- desaturated by 15 -->
+	<color name="green900_desaturated">#ff353b48</color> <!-- desaturated by 15 -->
 
 	<!-- scanner -->
 	<color name="scan_result_dots">#c04c56af</color>

@@ -39,7 +39,7 @@ public class PresenceGenerator extends AbstractGenerator {
 	}
 
 	public PresencePacket selfPresence(Account account, Presence.Status status) {
-		return selfPresence(account, status, true);
+		return selfPresence(account, status, false);
 	}
 
 	public PresencePacket selfPresence(Account account, Presence.Status status, boolean includePgpAnnouncement) {
@@ -53,7 +53,7 @@ public class PresenceGenerator extends AbstractGenerator {
 			Element cap = packet.addChild("c",
 					"http://jabber.org/protocol/caps");
 			cap.setAttribute("hash", "sha-1");
-			cap.setAttribute("node", "http://conversations.im");
+			cap.setAttribute("node", "http://moose-messenger.com");
 			cap.setAttribute("ver", capHash);
 		}
 		return packet;

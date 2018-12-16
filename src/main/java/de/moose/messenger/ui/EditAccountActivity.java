@@ -830,8 +830,14 @@ public class EditAccountActivity extends OmemoActivity implements OnAccountUpdat
 			} else {
 				this.binding.accountJid.getEditableText().append(this.mAccount.getJid().asBareJid().toString());
 			}
-			this.mPassword.getEditableText().clear();
-			this.mPassword.getEditableText().append(this.mAccount.getPassword());
+			if (mAccount.isOptionSet(Account.OPTION_LOGGED_IN_SUCCESSFULLY)) {
+				this.mPassword.getEditableText().clear();
+				this.mPassword.getEditableText().append(this.mAccount.getPassword());
+				this.mPassword.setFocusable(false);
+			} else {
+				this.mPassword.getEditableText().clear();
+				this.mPassword.getEditableText().append(this.mAccount.getPassword());
+			}
 		}
 
 		final boolean editable = !mAccount.isOptionSet(Account.OPTION_LOGGED_IN_SUCCESSFULLY);
@@ -839,11 +845,10 @@ public class EditAccountActivity extends OmemoActivity implements OnAccountUpdat
 		this.binding.accountJid.setFocusable(editable);
 		this.binding.accountJid.setFocusableInTouchMode(editable);
 
-
 		if (mAccount.isOptionSet(Account.OPTION_MAGIC_CREATE) || !mAccount.isOptionSet(Account.OPTION_LOGGED_IN_SUCCESSFULLY)) {
 			this.binding.accountPasswordLayout.setPasswordVisibilityToggleEnabled(true);
 		} else {
-			this.binding.accountPasswordLayout.setPasswordVisibilityToggleEnabled(false);
+			this.binding.accountPasswordLayout.setPasswordVisibilityToggleEnabled(true);
 		}
 
 		if (!mInitMode) {

@@ -35,8 +35,8 @@ public class Contact implements ListItem, Blockable {
 	public static final String OPTIONS = "options";
 	public static final String SYSTEMACCOUNT = "systemaccount";
 	public static final String PHOTOURI = "photouri";
-	public static final String KEYS = "pgpkey";
 	public static final String ACCOUNT = "accountUuid";
+    public static final String KEYS = "pgpkey";
 	public static final String AVATAR = "avatar";
 	public static final String LAST_PRESENCE = "last_presence";
 	public static final String LAST_TIME = "last_time";
@@ -72,11 +72,7 @@ public class Contact implements ListItem, Blockable {
 		this.photoUri = photoUri;
 		this.systemAccount = systemAccount;
 		JSONObject tmpJsonObject;
-		try {
-			tmpJsonObject = (keys == null ? new JSONObject("") : new JSONObject(keys));
-		} catch (JSONException e) {
-			tmpJsonObject = new JSONObject();
-		}
+		tmpJsonObject = new JSONObject();
 		this.keys = tmpJsonObject;
 		if (avatar != null) {
 			this.avatar = new Avatar();
@@ -112,7 +108,7 @@ public class Contact implements ListItem, Blockable {
 				cursor.getInt(cursor.getColumnIndex(OPTIONS)),
 				cursor.getString(cursor.getColumnIndex(PHOTOURI)),
 				cursor.getString(cursor.getColumnIndex(SYSTEMACCOUNT)),
-				cursor.getString(cursor.getColumnIndex(KEYS)),
+                cursor.getString(cursor.getColumnIndex(KEYS)),
 				cursor.getString(cursor.getColumnIndex(AVATAR)),
 				cursor.getLong(cursor.getColumnIndex(LAST_TIME)),
 				cursor.getString(cursor.getColumnIndex(LAST_PRESENCE)),
@@ -200,7 +196,6 @@ public class Contact implements ListItem, Blockable {
 			values.put(OPTIONS, subscription);
 			values.put(SYSTEMACCOUNT, systemAccount);
 			values.put(PHOTOURI, photoUri);
-			values.put(KEYS, keys.toString());
 			values.put(AVATAR, avatar == null ? null : avatar.getFilename());
 			values.put(LAST_PRESENCE, mLastPresence);
 			values.put(LAST_TIME, mLastseen);
@@ -294,32 +289,6 @@ public class Contact implements ListItem, Blockable {
 			}
 		}
 		return groups;
-	}
-
-	public long getPgpKeyId() {
-		synchronized (this.keys) {
-			if (this.keys.has("pgp_keyid")) {
-				try {
-					return this.keys.getLong("pgp_keyid");
-				} catch (JSONException e) {
-					return 0;
-				}
-			} else {
-				return 0;
-			}
-		}
-	}
-
-	public boolean setPgpKeyId(long keyId) {
-		final long previousKeyId = getPgpKeyId();
-		synchronized (this.keys) {
-			try {
-				this.keys.put("pgp_keyid", keyId);
-				return previousKeyId != keyId;
-			} catch (final JSONException ignored) {
-			}
-		}
-		return false;
 	}
 
 	public void setOption(int option) {

@@ -121,7 +121,6 @@ public class ConversationFragment extends XmppFragment implements EditMessage.Ke
 
 
     public static final int REQUEST_SEND_MESSAGE = 0x0201;
-    public static final int REQUEST_DECRYPT_PGP = 0x0202;
     public static final int REQUEST_ENCRYPT_MESSAGE = 0x0207;
     public static final int REQUEST_TRUST_KEYS_TEXT = 0x0208;
     public static final int REQUEST_TRUST_KEYS_ATTACHMENTS = 0x0209;
@@ -355,7 +354,6 @@ public class ConversationFragment extends XmppFragment implements EditMessage.Ke
             updateSnackBar(conversation);
         }
     };
-    private AtomicBoolean mSendingPgpMessage = new AtomicBoolean(false);
     private OnEditorActionListener mEditorActionListener = (v, actionId, event) -> {
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -979,11 +977,7 @@ public class ConversationFragment extends XmppFragment implements EditMessage.Ke
         messageListAdapter = new MessageAdapter((XmppActivity) getActivity(), this.messageList);
         messageListAdapter.setOnContactPictureClicked(message -> {
             String fingerprint;
-            if (message.getEncryption() == Message.ENCRYPTION_DECRYPTED) {
-                fingerprint = "pgp";
-            } else {
-                fingerprint = message.getFingerprint();
-            }
+            fingerprint = message.getFingerprint();
             final boolean received = message.getStatus() <= Message.STATUS_RECEIVED;
             if (received) {
                 if (message.getConversation() instanceof Conversation && message.getConversation().getMode() == Conversation.MODE_MULTI) {
@@ -2132,7 +2126,6 @@ public class ConversationFragment extends XmppFragment implements EditMessage.Ke
     }
 
     protected void messageSent() {
-        mSendingPgpMessage.set(false);
         this.binding.textinput.setText("");
         if (conversation.setCorrectingMessage(null)) {
             this.binding.textinput.append(conversation.getDraftMessage());
@@ -2161,10 +2154,6 @@ public class ConversationFragment extends XmppFragment implements EditMessage.Ke
             return true;
         }
         return false;
-    }
-
-    public void doneSendingPgpMessage() {
-        mSendingPgpMessage.set(false);
     }
 
     public long getMaxHttpUploadSize(Conversation conversation) {

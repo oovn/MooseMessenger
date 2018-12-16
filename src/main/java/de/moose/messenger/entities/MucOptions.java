@@ -636,7 +636,6 @@ public class MucOptions {
         private Affiliation affiliation = Affiliation.NONE;
         private Jid realJid;
         private Jid fullJid;
-        private long pgpKeyId = 0;
         private Avatar avatar;
         private MucOptions options;
         private ChatState chatState = Config.DEFAULT_CHATSTATE;
@@ -664,20 +663,6 @@ public class MucOptions {
 
         public void setAffiliation(String affiliation) {
             this.affiliation = Affiliation.of(affiliation);
-        }
-
-        public long getPgpKeyId() {
-            if (this.pgpKeyId != 0) {
-                return this.pgpKeyId;
-            } else if (realJid != null) {
-                return getAccount().getRoster().getContact(realJid).getPgpKeyId();
-            } else {
-                return 0;
-            }
-        }
-
-        public void setPgpKeyId(long id) {
-            this.pgpKeyId = id;
         }
 
         public Contact getContact() {
